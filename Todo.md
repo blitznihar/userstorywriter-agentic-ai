@@ -1,15 +1,23 @@
 - Deploy in Docker Container
 - Crewai
 - LangGraph
-- Autogen
+- Azure AI Foundry
+- Microsoft Agent Framework
 - Create Tools
     - Read Message from RabbitMQ
     - Write Message to RabbitMQ
     - Tool To send Email
     - Tool to read email from POP3 servers
+    - Tool for HITL using slack
+    - Tool for HITL using Teams Cards
 - RAG
 - Voice Based Assistant: Voice to Text and Text To Voice To run Scrum Team
     - Scrum Meeting Reading one user stories at a time and calling the team member
     - Making the notes and updating the status
 - Convert all tools to be an MCP
-- HITL + Agent to Agent Communication 
+- HITL + Agent to Agent Communication
+- Microsoft copilot 365
+
+Just for fun:
+- Semantic Kernel (SK)
+- AutoGen
