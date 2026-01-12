@@ -1,0 +1,15 @@
+- Deploy in Docker Container
+- Crewai
+- LangGraph
+- Autogen
+- Create Tools
+    - Read Message from RabbitMQ
+    - Write Message to RabbitMQ
+    - Tool To send Email
+    - Tool to read email from POP3 servers
+- RAG
+- Voice Based Assistant: Voice to Text and Text To Voice To run Scrum Team
+    - Scrum Meeting Reading one user stories at a time and calling the team member
+    - Making the notes and updating the status
+- Convert all tools to be an MCP
+- HITL + Agent to Agent Communication 
