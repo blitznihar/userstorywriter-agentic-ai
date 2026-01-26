@@ -1,0 +1,129 @@
+manifest:
+  version: "0.1.2"
+  schema: https://a2as.org/cert/schema
+  subject:
+    name: blitznihar/userstorywriter-agentic-ai
+    source: https://github.com/blitznihar/userstorywriter-agentic-ai
+    branch: main
+    commit: "d51b799d"
+    scope: [api/app/cmd/__main__.py, api/app/service/userstorylogic.py]
+  issued:
+    by: A2AS.org
+    at: '2026-01-26T16:11:00Z'
+  signatures:
+    digest: sha256:iLOszXl9TY_rVCbim1kgVqswmELaLIOKHsDJV1fY6CU
+    key: ed25519:Jfm38qd_5nbVx5m7AQ3HV6yp2EvR7zsXrwVU36xsFfc
+    sig: ed25519:-Wg8NSb8Soy0syGIFWLpXOc3YvflyhOkhYkjOK1VnbpucYgY4uTfjRjZ2g1BqnihiiRsHXcwFOgtz7NBYDOxDw
+
+agents:
+  agent.0:
+    type: instance
+    models: [gpt-4.1]
+    params:
+      function: main
+      name: Agile and Scrum Expert Product owner expert in User Story Writing
+      instance: agent
+      instructions: [Agile and Scrum Expert Product owner expert, in User Story Writing., You are an expert in Agile methodologies
+          and Scrum, 'framework, specializing in writing clear and concise user', stories., Your task is to help teams create
+          effective user stories, that capture the needs and requirements of end-users., 'When writing user stories, ensure
+          they follow the INVEST', 'criteria (Independent, Negotiable, Valuable, Estimable,', 'Small, Testable).', Provide
+          examples and best practices for writing user, stories that facilitate collaboration and understanding, among team
+          members., Always prioritize the user's perspective and focus on, delivering value through well-defined user stories.]
+  agent.1:
+    type: instance
+    models: [gpt-4.1]
+    params:
+      function: generate_user_stories
+      name: Agile and Scrum Expert Product owner expert in User Story Writing
+      output_type: AgentOutputSchema(UserStoryResponse, strict_json_schema=False)
+      instance: agent
+      instructions: [Agile and Scrum Expert Product owner expert, in User Story Writing., You are an expert in Agile methodologies
+          and Scrum, 'framework, specializing in writing clear and concise user', stories., Your task is to help teams create
+          effective user stories, that capture the needs and requirements of end-users., 'When writing user stories, ensure
+          they follow the INVEST', 'criteria (Independent, Negotiable, Valuable, Estimable,', 'Small, Testable).', Provide
+          examples and best practices for writing user, stories that facilitate collaboration and understanding, among team
+          members., Always prioritize the user's perspective and focus on, delivering value through well-defined user stories.]
+
+models:
+  gpt-4.1:
+    type: default
+    agents: [agent.0, agent.1]
+
+imports:
+  Agent: agents.Agent
+  AgentOutputSchema: agents.AgentOutputSchema
+  api_router: app.api.routes.router
+  APIRouter: fastapi.APIRouter
+  asyncio: asyncio
+  CORSMiddleware: fastapi.middleware.cors.CORSMiddleware
+  FastAPI: fastapi.FastAPI
+  generate_user_stories: app.service.userstorylogic.generate_user_stories
+  JSONResponse: fastapi.responses.JSONResponse
+  load_dotenv: dotenv.load_dotenv
+  logger: asyncio.log.logger
+  logging: logging
+  os: os
+  Request: fastapi.Request
+  RequirementsInput: app.model.RequirementsInput.RequirementsInput
+  Runner: agents.Runner
+  set_default_openai_api: agents.set_default_openai_api
+  set_tracing_disabled: agents.set_tracing_disabled
+  setup_logging: app.logging_config.setup_logging
+  time: time
+  UserStoryResponse: app.model.UserStoryResponse.UserStoryResponse
+  uuid4: uuid.uuid4
+
+functions:
+  generate:
+    type: async
+    module: api.app.api.routes
+    args: [req]
+  generate_user_stories:
+    type: async
+    module: api.app.service.userstorylogic
+    args: [req]
+    params:
+      returns: UserStoryResponse
+  health:
+    type: sync
+    module: api.app.main
+  hello:
+    type: sync
+    module: api.app.api.routes
+    args: [name]
+  log_requests:
+    type: async
+    module: api.app.main
+    args: [request, call_next]
+  main:
+    type: async
+    module: api.app.cmd.__main__
+
+variables:
+  DOCKER_AI_API_KEY:
+    type: env
+    params:
+      caller: [os.getenv]
+      path: [api.app.cmd.__main__, api.app.service.userstorylogic]
+  DOCKER_AI_API_URL:
+    type: env
+    params:
+      caller: [os.getenv]
+      path: [api.app.cmd.__main__, api.app.service.userstorylogic]
+  DOCKER_AI_MODEL:
+    type: env
+    params:
+      caller: [os.getenv]
+      path: [api.app.cmd.__main__, api.app.service.userstorylogic]
+  OPENAI_API_KEY:
+    type: env
+    params:
+      caller: [os.environ]
+  OPENAI_BASE_URL:
+    type: env
+    params:
+      caller: [os.environ]
+  OPENAI_DEFAULT_MODEL:
+    type: env
+    params:
+      caller: [os.environ]
